@@ -7,6 +7,8 @@ import {
     rowVariants,
 } from "./assets/motion/constants.ts";
 import {RewardDialog} from "./components/dialog/RewardDialog.tsx";
+import {Link, NavLink} from "react-router-dom";
+import {useLotteryStore} from "./store/Lotterystore.ts";
 
 // Список возможных призов
 const prizes = [
@@ -27,10 +29,16 @@ const donateValues = [100, 200, 500, 1000, 2000];
 
 function App() {
     // Состояние для хранения открытых ячеек
-    const [openedCells, setOpenedCells] = useState({});
     const [showConfetti, setShowConfetti] = useState(false);
     const [modalPrize, setModalPrize] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {
+        prizes,
+        openedCells,
+        getCellLot,
+        openCell,
+        clearOpenedCells
+    } = useLotteryStore();
 
     // Закрыть модальное окно
     const closeModal = () => {
@@ -55,8 +63,25 @@ function App() {
         };
     }, [isModalOpen]);
 
-    // Функция для получения случайного приза
-    const getRandomPrize = () => {
+    // Функция для получения случайного приза или назначенного приза
+    const getPrizeForCell = (rowIndex, colIndex) => {
+        // Сначала проверяем, есть ли назначенный приз в store
+        const assignedPrize = getCellLot(rowIndex, colIndex);
+
+        if (assignedPrize) {
+            return assignedPrize;
+        }
+
+        // Если нет назначенного приза, выбираем случайный
+        if (prizes.length === 0) {
+            return {
+                id: 0,
+                name: 'Нет призов',
+                value: '❌',
+                color: '#999'
+            };
+        }
+
         const randomIndex = Math.floor(Math.random() * prizes.length);
         return prizes[randomIndex];
     };
@@ -69,13 +94,8 @@ function App() {
         if (openedCells[cellKey]) return;
 
         // Получаем случайный приз
-        const prize = getRandomPrize();
-
-        // Обновляем состояние
-        setOpenedCells(prev => ({
-            ...prev,
-            [cellKey]: prize
-        }));
+        const prize = getPrizeForCell(rowIndex, colIndex);
+        openCell(rowIndex, colIndex, prize);
 
         // Показываем модальное окно с призом
         setModalPrize(prize);
@@ -90,7 +110,7 @@ function App() {
 
     // Функция сброса игры
     const resetGame = () => {
-        setOpenedCells({});
+        clearOpenedCells();
         setShowConfetti(false);
         setModalPrize(null);
         setIsModalOpen(false);
@@ -132,6 +152,15 @@ function App() {
                 >
                     🔄 Начать заново
                 </motion.button>
+                <NavLink to={'/admin'}>
+                    <motion.button
+                        className="admin-btn"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        ⚙️ Админка
+                    </motion.button>
+                </NavLink>
             </motion.div>
 
             <motion.div

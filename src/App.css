@@ -45,7 +45,8 @@ body {
     margin-bottom: 20px;
 }
 
-.reset-btn {
+.reset-btn,
+.admin-btn {
     background: white;
     color: #667eea;
     border: none;
@@ -58,7 +59,14 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.reset-btn:hover {
+.admin-btn {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    color: #333;
+}
+
+
+.reset-btn:hover,
+.admin-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
@@ -135,17 +143,17 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 4px;
     padding: 10px;
 }
 
 .prize-emoji {
-    font-size: 3rem;
+    font-size: 1rem;
     animation: bounceIn 0.6s ease;
 }
 
 .prize-name {
-    font-size: 0.9rem;
+    font-size: 0.5rem;
     font-weight: bold;
     color: #333;
     text-align: center;
@@ -357,7 +365,7 @@ body {
     }
 
     .prize-emoji {
-        font-size: 2rem;
+        font-size: 1rem;
     }
 
     .prize-name {

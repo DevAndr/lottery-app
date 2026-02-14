@@ -13,7 +13,9 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "lottie-react": "^2.4.0",
-    "framer-motion": "^10.16.16"
+    "framer-motion": "^10.16.16",
+    "zustand": "^4.4.7",
+    "react-router-dom": "^6.20.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
