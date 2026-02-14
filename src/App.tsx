@@ -1,0 +1,241 @@
+import './App.css'
+import {useEffect, useState} from "react";
+import {motion} from 'framer-motion';
+import {
+    cellVariants,
+    containerVariants,
+    rowVariants,
+} from "./assets/motion/constants.ts";
+import {RewardDialog} from "./components/dialog/RewardDialog.tsx";
+
+// Список возможных призов
+const prizes = [
+    {id: 1, name: 'Приз 1', value: '🎁', color: '#ff6b6b'},
+    {id: 2, name: 'Приз 2', value: '💎', color: '#4ecdc4'},
+    {id: 3, name: 'Приз 3', value: '🏆', color: '#ffe66d'},
+    {id: 4, name: 'Приз 4', value: '🎯', color: '#a8e6cf'},
+    {id: 5, name: 'Приз 5', value: '⭐', color: '#ff8b94'},
+    {id: 6, name: 'Приз 6', value: '🎪', color: '#ffd3b6'},
+    {id: 7, name: 'Приз 7', value: '🎨', color: '#c7ceea'},
+    {id: 8, name: 'Приз 8', value: '🎭', color: '#ffaaa5'},
+    {id: 9, name: 'Увы, мимо!', value: '😢', color: '#dfe6e9'},
+    {id: 10, name: 'Попробуй еще!', value: '🔄', color: '#dfe6e9'},
+];
+
+// Значения донатов (суммы на ячейках)
+const donateValues = [100, 200, 500, 1000, 2000];
+
+function App() {
+    // Состояние для хранения открытых ячеек
+    const [openedCells, setOpenedCells] = useState({});
+    const [showConfetti, setShowConfetti] = useState(false);
+    const [modalPrize, setModalPrize] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Закрыть модальное окно
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setTimeout(() => setModalPrize(null), 300); // Задержка для анимации
+    };
+
+    // Закрытие модального окна по клавише ESC
+    useEffect(() => {
+        const handleEscKey = (event) => {
+            if (event.key === 'Escape' && isModalOpen) {
+                closeModal();
+            }
+        };
+
+        if (isModalOpen) {
+            window.addEventListener('keydown', handleEscKey);
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleEscKey);
+        };
+    }, [isModalOpen]);
+
+    // Функция для получения случайного приза
+    const getRandomPrize = () => {
+        const randomIndex = Math.floor(Math.random() * prizes.length);
+        return prizes[randomIndex];
+    };
+
+    // Обработчик клика на ячейку
+    const handleCellClick = (rowIndex, colIndex) => {
+        const cellKey = `${rowIndex}-${colIndex}`;
+
+        // Если ячейка уже открыта, ничего не делаем
+        if (openedCells[cellKey]) return;
+
+        // Получаем случайный приз
+        const prize = getRandomPrize();
+
+        // Обновляем состояние
+        setOpenedCells(prev => ({
+            ...prev,
+            [cellKey]: prize
+        }));
+
+        // Показываем модальное окно с призом
+        setModalPrize(prize);
+        setIsModalOpen(true);
+
+        // Показываем конфетти для хороших призов
+        if (prize.id <= 8) {
+            setShowConfetti(true);
+            setTimeout(() => setShowConfetti(false), 2000);
+        }
+    };
+
+    // Функция сброса игры
+    const resetGame = () => {
+        setOpenedCells({});
+        setShowConfetti(false);
+        setModalPrize(null);
+        setIsModalOpen(false);
+    };
+
+    return (
+        <div className="app">
+            {/* Модальное окно с призом */}
+            <RewardDialog showConfetti={showConfetti} modalPrize={modalPrize} show={isModalOpen} onClose={closeModal}/>
+
+            <motion.div
+                className="header"
+                initial={{opacity: 0, y: -50}}
+                animate={{opacity: 1, y: 0}}
+                transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                }}
+            >
+                <motion.h1
+                    animate={{
+                        scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                >
+                    🎰 Лотерея Донатов 🎰
+                </motion.h1>
+                <p>Кликай на ячейку и узнай свой приз!</p>
+                <motion.button
+                    className="reset-btn"
+                    onClick={resetGame}
+                    whileHover={{scale: 1.05}}
+                    whileTap={{scale: 0.95}}
+                >
+                    🔄 Начать заново
+                </motion.button>
+            </motion.div>
+
+            <motion.div
+                className="lottery-grid"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+            >
+                {donateValues.map((value, rowIndex) => (
+                    <motion.div
+                        key={rowIndex}
+                        className="lottery-row"
+                        variants={rowVariants}
+                    >
+                        {/* Ячейка с названием доната */}
+                        <motion.div
+                            className="donate-label"
+                            variants={cellVariants}
+                        >
+                            Донат<br/>{value}
+                        </motion.div>
+
+                        {/* 6 ячеек для каждого ряда */}
+                        {[...Array(6)].map((_, colIndex) => {
+                            const cellKey = `${rowIndex}-${colIndex}`;
+                            const openedPrize = openedCells[cellKey];
+
+                            return (
+                                <motion.div
+                                    key={colIndex}
+                                    className={`lottery-cell ${openedPrize ? 'opened' : ''}`}
+                                    onClick={() => handleCellClick(rowIndex, colIndex)}
+                                    style={{
+                                        backgroundColor: openedPrize ? openedPrize.color : undefined
+                                    }}
+                                    variants={cellVariants}
+                                    whileHover={!openedPrize ? "hover" : undefined}
+                                    whileTap={!openedPrize ? "tap" : undefined}
+                                    animate={openedPrize ? "animate" : "visible"}
+                                    layout
+                                >
+                                    {openedPrize ? (
+                                        <motion.div
+                                            className="prize-content"
+                                            initial={{opacity: 0, scale: 0}}
+                                            animate={{opacity: 1, scale: 1}}
+                                            transition={{
+                                                type: "spring",
+                                                stiffness: 200,
+                                                damping: 15
+                                            }}
+                                        >
+                                            <motion.div
+                                                className="prize-emoji"
+                                                initial={{scale: 0, rotate: -180}}
+                                                animate={{scale: 1, rotate: 0}}
+                                                transition={{
+                                                    type: "spring",
+                                                    stiffness: 150,
+                                                    damping: 12
+                                                }}
+                                            >
+                                                {openedPrize.value}
+                                            </motion.div>
+                                            <motion.div
+                                                className="prize-name"
+                                                initial={{opacity: 0, y: 10}}
+                                                animate={{opacity: 1, y: 0}}
+                                                transition={{delay: 0.2}}
+                                            >
+                                                {openedPrize.name}
+                                            </motion.div>
+                                        </motion.div>
+                                    ) : (
+                                        <div className="cell-value">{value}</div>
+                                    )}
+                                </motion.div>
+                            );
+                        })}
+                    </motion.div>
+                ))}
+            </motion.div>
+
+            <motion.div
+                className="footer"
+                initial={{opacity: 0, y: 50}}
+                animate={{opacity: 1, y: 0}}
+                transition={{delay: 0.5}}
+            >
+                <motion.p
+                    key={Object.keys(openedCells).length}
+                    initial={{scale: 1.5, color: '#ffd700'}}
+                    animate={{scale: 1, color: '#ffffff'}}
+                    transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 10
+                    }}
+                >
+                    Открыто ячеек: {Object.keys(openedCells).length} / 30
+                </motion.p>
+            </motion.div>
+        </div>
+    )
+}
+
+export default App
