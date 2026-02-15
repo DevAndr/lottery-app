@@ -7,22 +7,8 @@ import {
     rowVariants,
 } from "./assets/motion/constants.ts";
 import {RewardDialog} from "./components/dialog/RewardDialog.tsx";
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useLotteryStore} from "./store/Lotterystore.ts";
-
-// Список возможных призов
-const prizes = [
-    {id: 1, name: 'Приз 1', value: '🎁', color: '#ff6b6b'},
-    {id: 2, name: 'Приз 2', value: '💎', color: '#4ecdc4'},
-    {id: 3, name: 'Приз 3', value: '🏆', color: '#ffe66d'},
-    {id: 4, name: 'Приз 4', value: '🎯', color: '#a8e6cf'},
-    {id: 5, name: 'Приз 5', value: '⭐', color: '#ff8b94'},
-    {id: 6, name: 'Приз 6', value: '🎪', color: '#ffd3b6'},
-    {id: 7, name: 'Приз 7', value: '🎨', color: '#c7ceea'},
-    {id: 8, name: 'Приз 8', value: '🎭', color: '#ffaaa5'},
-    {id: 9, name: 'Увы, мимо!', value: '😢', color: '#dfe6e9'},
-    {id: 10, name: 'Попробуй еще!', value: '🔄', color: '#dfe6e9'},
-];
 
 // Значения донатов (суммы на ячейках)
 const donateValues = [100, 200, 500, 1000, 2000];
@@ -105,10 +91,8 @@ function App() {
         }, 1000)
 
         // Показываем конфетти для хороших призов
-        if (prize.id <= 8) {
-            setShowConfetti(true);
-            setTimeout(() => setShowConfetti(false), 2000);
-        }
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 2000);
     };
 
     // Функция сброса игры
@@ -147,25 +131,25 @@ function App() {
                     🎰 Лотерея Донатов 🎰
                 </motion.h1>
                 <p>Кликай на ячейку и узнай свой приз!</p>
-               <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
-                   <motion.button
-                       className="reset-btn"
-                       onClick={resetGame}
-                       whileHover={{scale: 1.05}}
-                       whileTap={{scale: 0.95}}
-                   >
-                       🔄 Начать заново
-                   </motion.button>
-                   <NavLink to={'/admin'}>
-                       <motion.button
-                           className="admin-btn"
-                           whileHover={{ scale: 1.05 }}
-                           whileTap={{ scale: 0.95 }}
-                       >
-                           ⚙️ Админка
-                       </motion.button>
-                   </NavLink>
-               </div>
+                <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
+                    <motion.button
+                        className="reset-btn"
+                        onClick={resetGame}
+                        whileHover={{scale: 1.05}}
+                        whileTap={{scale: 0.95}}
+                    >
+                        🔄 Начать заново
+                    </motion.button>
+                    <NavLink to={'/admin'}>
+                        <motion.button
+                            className="admin-btn"
+                            whileHover={{scale: 1.05}}
+                            whileTap={{scale: 0.95}}
+                        >
+                            ⚙️ Админка
+                        </motion.button>
+                    </NavLink>
+                </div>
             </motion.div>
 
             <motion.div

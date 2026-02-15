@@ -81,11 +81,7 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                             animate={{opacity: 1, y: 0}}
                             transition={{delay: 0.4}}
                         >
-                            {modalPrize.id <= 8 ? (
-                                '🎉 Поздравляем! Вы выиграли!'
-                            ) : (
-                                '😔 Не повезло, попробуйте еще раз!'
-                            )}
+                            🎉 Поздравляем! Вы выиграли!
                         </motion.p>
                         <motion.button
                             className="modal-button"
