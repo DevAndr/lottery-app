@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './AdminPage.css';
-import {useLotteryStore} from "../../store/Lotterystore.ts";
+import {type Prize, useLotteryStore} from "../../store/Lotterystore.ts";
 import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
+import * as React from "react";
 
 const donateValues = [100, 200, 500, 1000, 2000];
 
@@ -88,6 +89,7 @@ function AdminPage() {
                 <h1>⚙️ Администрирование лотереи</h1>
                 <Link to="/">
                     <motion.button
+                        // @ts-ignore
                         className="back-button"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -141,6 +143,7 @@ function AdminPage() {
                         {prizes.map((prize) => (
                             <motion.div
                                 key={prize.id}
+                                // @ts-ignore
                                 className={`prize-item ${
                                     selectedPrize?.id === prize.id ? 'selected' : ''
                                 }`}
@@ -226,6 +229,7 @@ function AdminPage() {
                                     return (
                                         <motion.div
                                             key={colIndex}
+                                            // @ts-ignore
                                             className={`lottery-cell-admin ${
                                                 assignedPrize ? 'assigned' : ''
                                             }`}
@@ -270,8 +274,9 @@ function AdminPage() {
             {editingPrize && (
                 <div className="modal-overlay-admin" onClick={() => setEditingPrize(null)}>
                     <motion.div
+                        // @ts-ignore
                         className="modal-content-admin"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e: React.MouseEvent) => e.stopPropagation()}
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                     >
