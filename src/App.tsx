@@ -99,7 +99,10 @@ function App() {
 
         // Показываем модальное окно с призом
         setModalPrize(prize);
-        setIsModalOpen(true);
+
+        setTimeout(() => {
+            setIsModalOpen(true);
+        }, 1000)
 
         // Показываем конфетти для хороших призов
         if (prize.id <= 8) {

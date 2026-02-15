@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './AdminPage.css';
 import {useLotteryStore} from "../../store/Lotterystore.ts";
+import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
 
 const donateValues = [100, 200, 500, 1000, 2000];
 
@@ -113,15 +114,23 @@ function AdminPage() {
                                     setNewPrize({ ...newPrize, name: e.target.value })
                                 }
                             />
-                            <input
-                                type="text"
-                                placeholder="Эмодзи (например: 🎁)"
+
+                            <EmojiPicker
                                 value={newPrize.value}
-                                onChange={(e) =>
-                                    setNewPrize({ ...newPrize, value: e.target.value })
+                                onChange={(emoji) =>
+                                    setNewPrize({ ...newPrize, value: emoji })
                                 }
-                                maxLength={2}
                             />
+
+                            {/*<input*/}
+                            {/*    type="text"*/}
+                            {/*    placeholder="Эмодзи (например: 🎁)"*/}
+                            {/*    value={newPrize.value}*/}
+                            {/*    onChange={(e) =>*/}
+                            {/*        setNewPrize({ ...newPrize, value: e.target.value })*/}
+                            {/*    }*/}
+                            {/*    maxLength={2}*/}
+                            {/*/>*/}
                             <input
                                 type="color"
                                 value={newPrize.color}
