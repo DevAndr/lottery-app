@@ -122,15 +122,6 @@ function AdminPage() {
                                 }
                             />
 
-                            {/*<input*/}
-                            {/*    type="text"*/}
-                            {/*    placeholder="Эмодзи (например: 🎁)"*/}
-                            {/*    value={newPrize.value}*/}
-                            {/*    onChange={(e) =>*/}
-                            {/*        setNewPrize({ ...newPrize, value: e.target.value })*/}
-                            {/*    }*/}
-                            {/*    maxLength={2}*/}
-                            {/*/>*/}
                             <input
                                 type="color"
                                 value={newPrize.color}
