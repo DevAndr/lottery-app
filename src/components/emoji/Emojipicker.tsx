@@ -2,8 +2,13 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './EmojiPicker.css';
 
+type EmojiCategorie = {
+    name: string
+    emojis: string[]
+}
+
 // Категории эмодзи
-const emojiCategories = {
+const emojiCategories: Record<string, EmojiCategorie> = {
     prizes: {
         name: '🏆 Призы',
         emojis: ['🎁', '💎', '🏆', '🎯', '⭐', '🎪', '🎨', '🎭', '🎬', '🎮', '🎲', '🎰', '🎸', '🎹', '🎺']
@@ -117,6 +122,7 @@ function EmojiPicker({ value, onChange, label = 'Эмодзи' }: EmojiPickerPro
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
+                        // @ts-ignore
                         className="emoji-picker-dropdown"
                         initial={{ opacity: 0, y: -10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -142,6 +148,7 @@ function EmojiPicker({ value, onChange, label = 'Эмодзи' }: EmojiPickerPro
                                     {Object.entries(emojiCategories).map(([key, category]) => (
                                         <motion.button
                                             key={key}
+                                            // @ts-ignore
                                             className={`emoji-category-btn ${activeCategory === key ? 'active' : ''}`}
                                             onClick={() => setActiveCategory(key)}
                                             whileHover={{ scale: 1.05 }}
@@ -170,6 +177,7 @@ function EmojiPicker({ value, onChange, label = 'Эмодзи' }: EmojiPickerPro
                             {getFilteredEmojis().map((emoji, index) => (
                                 <motion.button
                                     key={`${emoji}-${index}`}
+                                    // @ts-ignore
                                     className="emoji-item"
                                     onClick={() => handleEmojiSelect(emoji)}
                                     whileHover={{ scale: 1.2, zIndex: 10 }}
@@ -203,6 +211,7 @@ function EmojiPicker({ value, onChange, label = 'Эмодзи' }: EmojiPickerPro
                                     {['🎁', '💎', '🏆', '⭐', '💰', '🎉', '😢', '🔄'].map((emoji) => (
                                         <motion.button
                                             key={emoji}
+                                            // @ts-ignore
                                             className="emoji-item"
                                             onClick={() => handleEmojiSelect(emoji)}
                                             whileHover={{ scale: 1.2 }}

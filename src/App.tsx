@@ -8,7 +8,7 @@ import {
 } from "./assets/motion/constants.ts";
 import {RewardDialog} from "./components/dialog/RewardDialog.tsx";
 import {NavLink} from "react-router-dom";
-import {useLotteryStore} from "./store/Lotterystore.ts";
+import {type Prize, useLotteryStore} from "./store/Lotterystore.ts";
 
 // Значения донатов (суммы на ячейках)
 const donateValues = [100, 200, 500, 1000, 2000];
@@ -16,7 +16,7 @@ const donateValues = [100, 200, 500, 1000, 2000];
 function App() {
     // Состояние для хранения открытых ячеек
     const [showConfetti, setShowConfetti] = useState(false);
-    const [modalPrize, setModalPrize] = useState(null);
+    const [modalPrize, setModalPrize] = useState<Prize | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const {
         prizes,
@@ -34,7 +34,7 @@ function App() {
 
     // Закрытие модального окна по клавише ESC
     useEffect(() => {
-        const handleEscKey = (event) => {
+        const handleEscKey = (event: {key: string}) => {
             if (event.key === 'Escape' && isModalOpen) {
                 closeModal();
             }
@@ -50,7 +50,7 @@ function App() {
     }, [isModalOpen]);
 
     // Функция для получения случайного приза или назначенного приза
-    const getPrizeForCell = (rowIndex, colIndex) => {
+    const getPrizeForCell = (rowIndex: number, colIndex: number) => {
         // Сначала проверяем, есть ли назначенный приз в store
         const assignedPrize = getCellLot(rowIndex, colIndex);
 
@@ -68,12 +68,13 @@ function App() {
             };
         }
 
+        // eslint-disable-next-line react-hooks/purity
         const randomIndex = Math.floor(Math.random() * prizes.length);
         return prizes[randomIndex];
     };
 
     // Обработчик клика на ячейку
-    const handleCellClick = (rowIndex, colIndex) => {
+    const handleCellClick = (rowIndex: number, colIndex: number) => {
         const cellKey = `${rowIndex}-${colIndex}`;
 
         // Если ячейка уже открыта, ничего не делаем
@@ -109,6 +110,7 @@ function App() {
             <RewardDialog showConfetti={showConfetti} modalPrize={modalPrize} show={isModalOpen} onClose={closeModal}/>
 
             <motion.div
+                // @ts-ignore
                 className="header"
                 initial={{opacity: 0, y: -50}}
                 animate={{opacity: 1, y: 0}}
@@ -133,6 +135,7 @@ function App() {
                 <p>Кликай на ячейку и узнай свой приз!</p>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
                     <motion.button
+                        // @ts-ignore
                         className="reset-btn"
                         onClick={resetGame}
                         whileHover={{scale: 1.05}}
@@ -142,6 +145,7 @@ function App() {
                     </motion.button>
                     <NavLink to={'/admin'}>
                         <motion.button
+                            // @ts-ignore
                             className="admin-btn"
                             whileHover={{scale: 1.05}}
                             whileTap={{scale: 0.95}}
@@ -153,6 +157,8 @@ function App() {
             </motion.div>
 
             <motion.div
+
+                // @ts-ignore
                 className="lottery-grid"
                 variants={containerVariants}
                 initial="hidden"
@@ -161,11 +167,13 @@ function App() {
                 {donateValues.map((value, rowIndex) => (
                     <motion.div
                         key={rowIndex}
+                        // @ts-ignore
                         className="lottery-row"
                         variants={rowVariants}
                     >
                         {/* Ячейка с названием доната */}
                         <motion.div
+                            // @ts-ignore
                             className="donate-label"
                             variants={cellVariants}
                         >
@@ -180,6 +188,7 @@ function App() {
                             return (
                                 <motion.div
                                     key={colIndex}
+                                    // @ts-ignore
                                     className={`lottery-cell ${openedPrize ? 'opened' : ''}`}
                                     onClick={() => handleCellClick(rowIndex, colIndex)}
                                     style={{
@@ -193,6 +202,7 @@ function App() {
                                 >
                                     {openedPrize ? (
                                         <motion.div
+                                            // @ts-ignore
                                             className="prize-content"
                                             initial={{opacity: 0, scale: 0}}
                                             animate={{opacity: 1, scale: 1}}
@@ -203,6 +213,7 @@ function App() {
                                             }}
                                         >
                                             <motion.div
+                                                // @ts-ignore
                                                 className="prize-emoji"
                                                 initial={{scale: 0, rotate: -180}}
                                                 animate={{scale: 1, rotate: 0}}
@@ -215,6 +226,7 @@ function App() {
                                                 {openedPrize.value}
                                             </motion.div>
                                             <motion.div
+                                                // @ts-ignore
                                                 className="prize-name"
                                                 initial={{opacity: 0, y: 10}}
                                                 animate={{opacity: 1, y: 0}}
@@ -234,6 +246,7 @@ function App() {
             </motion.div>
 
             <motion.div
+                // @ts-ignore
                 className="footer"
                 initial={{opacity: 0, y: 50}}
                 animate={{opacity: 1, y: 0}}

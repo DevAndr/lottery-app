@@ -2,7 +2,8 @@ import {AnimatePresence, motion} from "framer-motion";
 import {modalVariants, overlayVariants} from "../../assets/motion/constants.ts";
 import Lottie from "lottie-react";
 import confettiAnimation from "../../assets/lottie/confetti.json";
-import type {FC} from "react";
+import  {type FC} from "react";
+import * as React from "react";
 
 interface Props {
     show: boolean;
@@ -22,6 +23,7 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
     return <AnimatePresence>
         {show && modalPrize && (
             <motion.div
+                // @ts-ignore
                 className="modal-overlay"
                 onClick={onClose}
                 variants={overlayVariants}
@@ -45,8 +47,9 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                     />
                 </div>}
                 <motion.div
+                    // @ts-ignore
                     className="modal-content"
-                    onClick={(e) => e.stopPropagation()}
+                    onClick={(e: React.MouseEvent) => e.stopPropagation()}
                     variants={modalVariants}
                     initial="hidden"
                     animate="visible"
@@ -55,6 +58,7 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                     <button className="modal-close" onClick={onClose}>×</button>
                     <div className="modal-prize">
                         <motion.div
+                            // @ts-ignore
                             className="modal-prize-emoji"
                             initial={{scale: 0, rotate: -180}}
                             animate={{scale: 1, rotate: 0}}
@@ -68,6 +72,7 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                             {modalPrize.value}
                         </motion.div>
                         <motion.h2
+                            // @ts-ignore
                             className="modal-prize-title"
                             initial={{opacity: 0, y: 20}}
                             animate={{opacity: 1, y: 0}}
@@ -76,6 +81,7 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                             {modalPrize.name}
                         </motion.h2>
                         <motion.p
+                            // @ts-ignore
                             className="modal-prize-message"
                             initial={{opacity: 0, y: 20}}
                             animate={{opacity: 1, y: 0}}
@@ -84,6 +90,7 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                             🎉 Поздравляем! Вы выиграли!
                         </motion.p>
                         <motion.button
+                            // @ts-ignore
                             className="modal-button"
                             onClick={onClose}
                             initial={{opacity: 0, scale: 0.8}}
