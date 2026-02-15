@@ -144,23 +144,25 @@ function App() {
                     🎰 Лотерея Донатов 🎰
                 </motion.h1>
                 <p>Кликай на ячейку и узнай свой приз!</p>
-                <motion.button
-                    className="reset-btn"
-                    onClick={resetGame}
-                    whileHover={{scale: 1.05}}
-                    whileTap={{scale: 0.95}}
-                >
-                    🔄 Начать заново
-                </motion.button>
-                <NavLink to={'/admin'}>
-                    <motion.button
-                        className="admin-btn"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        ⚙️ Админка
-                    </motion.button>
-                </NavLink>
+               <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
+                   <motion.button
+                       className="reset-btn"
+                       onClick={resetGame}
+                       whileHover={{scale: 1.05}}
+                       whileTap={{scale: 0.95}}
+                   >
+                       🔄 Начать заново
+                   </motion.button>
+                   <NavLink to={'/admin'}>
+                       <motion.button
+                           className="admin-btn"
+                           whileHover={{ scale: 1.05 }}
+                           whileTap={{ scale: 0.95 }}
+                       >
+                           ⚙️ Админка
+                       </motion.button>
+                   </NavLink>
+               </div>
             </motion.div>
 
             <motion.div
