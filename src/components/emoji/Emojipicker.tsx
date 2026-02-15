@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import './EmojiPicker.css';
+import './Emojipicker.css';
 
 type EmojiCategorie = {
     name: string
