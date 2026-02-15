@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import './AdminPage.css';
+import './Adminpage.css';
 import {type Prize, useLotteryStore} from "../../store/Lotterystore.ts";
 import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
 import * as React from "react";
