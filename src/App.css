@@ -90,13 +90,13 @@ body {
 
 .donate-label {
     min-width: 90px;
-    background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 100%);
+    background: linear-gradient(135deg, #ffdeb3 0%, #e3ffc0 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 1rem;
-    color: #d63384;
+    color: #d67c33;
     border-radius: 10px;
     text-align: center;
     line-height: 1.3;
@@ -106,7 +106,7 @@ body {
 .lottery-cell {
     flex: 1;
     aspect-ratio: 1;
-    background: linear-gradient(135deg, #ffb3c1 0%, #ffc0cb 100%);
+    background: linear-gradient(135deg, #ffdeb3 0%, #e3ffc0 100%);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -130,7 +130,7 @@ body {
 .cell-value {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #d63384;
+    color: #d67c33;
 }
 
 .lottery-cell.opened {
