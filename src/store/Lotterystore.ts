@@ -7,6 +7,7 @@ export interface Prize {
     name: string;
     value: string; // эмодзи
     color: string;
+    image?: string; // путь к картинке из /images/gifts/
 }
 
 // Интерфейс для ячейки с лотом
@@ -17,18 +18,7 @@ export interface CellLot {
 }
 
 // Дефолтные призы
-export const defaultPrizes: Prize[] = [
-    { id: 1, name: 'Приз 1', value: '🎁', color: '#ff6b6b' },
-    { id: 2, name: 'Приз 2', value: '💎', color: '#4ecdc4' },
-    { id: 3, name: 'Приз 3', value: '🏆', color: '#ffe66d' },
-    { id: 4, name: 'Приз 4', value: '🎯', color: '#a8e6cf' },
-    { id: 5, name: 'Приз 5', value: '⭐', color: '#ff8b94' },
-    { id: 6, name: 'Приз 6', value: '🎪', color: '#ffd3b6' },
-    { id: 7, name: 'Приз 7', value: '🎨', color: '#c7ceea' },
-    { id: 8, name: 'Приз 8', value: '🎭', color: '#ffaaa5' },
-    { id: 9, name: 'Увы, мимо!', value: '😢', color: '#dfe6e9' },
-    { id: 10, name: 'Попробуй еще!', value: '🔄', color: '#dfe6e9' },
-];
+export const defaultPrizes: Prize[] = [];
 
 interface LotteryStore {
     // Список всех доступных призов
@@ -112,8 +102,8 @@ export const useLotteryStore = create<LotteryStore>()(
                 const newLots: Record<string, Prize> = {};
 
                 // 5 рядов, 6 колонок
-                for (let row = 0; row < 5; row++) {
-                    for (let col = 0; col < 6; col++) {
+                for (let row = 0; row < 4; row++) {
+                    for (let col = 0; col < 5; col++) {
                         const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
                         newLots[`${row}-${col}`] = randomPrize;
                     }

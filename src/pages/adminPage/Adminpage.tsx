@@ -6,7 +6,9 @@ import {type Prize, useLotteryStore} from "../../store/Lotterystore.ts";
 import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
 import * as React from "react";
 
-const donateValues = [100, 200, 500, 1000, 2000];
+const donateValues = [100, 200, 500, 1000];
+
+const giftImages = Array.from({ length: 15 }, (_, i) => `/images/gifts/${i + 1}.jpg`);
 
 function AdminPage() {
     const {
@@ -26,6 +28,7 @@ function AdminPage() {
         name: '',
         value: '',
         color: '#ff6b6b',
+        image: '',
     });
     const [selectedPrize, setSelectedPrize] = useState<Prize | null>(null);
 
@@ -40,9 +43,10 @@ function AdminPage() {
         addPrize({
             id: maxId + 1,
             ...newPrize,
+            image: newPrize.image || undefined,
         });
 
-        setNewPrize({ name: '', value: '', color: '#ff6b6b' });
+        setNewPrize({ name: '', value: '', color: '#ff6b6b', image: '' });
     };
 
     // Обновить приз
@@ -135,6 +139,26 @@ function AdminPage() {
                                 ➕ Добавить
                             </button>
                         </div>
+                        <div className="image-picker">
+                            <h4>Картинка приза (необязательно)</h4>
+                            <div className="image-picker-grid">
+                                <div
+                                    className={`image-picker-item ${!newPrize.image ? 'selected' : ''}`}
+                                    onClick={() => setNewPrize({ ...newPrize, image: '' })}
+                                >
+                                    Без картинки
+                                </div>
+                                {giftImages.map((img) => (
+                                    <div
+                                        key={img}
+                                        className={`image-picker-item ${newPrize.image === img ? 'selected' : ''}`}
+                                        onClick={() => setNewPrize({ ...newPrize, image: img })}
+                                    >
+                                        <img src={img} alt="" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Список призов */}
@@ -152,7 +176,11 @@ function AdminPage() {
                                 style={{ borderLeft: `4px solid ${prize.color}` }}
                             >
                                 <div className="prize-info">
-                                    <span className="prize-emoji">{prize.value}</span>
+                                    {prize.image ? (
+                                        <img src={prize.image} alt={prize.name} className="prize-thumb" />
+                                    ) : (
+                                        <span className="prize-emoji">{prize.value}</span>
+                                    )}
                                     <span className="prize-name">{prize.name}</span>
                                     <span
                                         className="prize-color"
@@ -223,7 +251,7 @@ function AdminPage() {
                                     {value}
                                 </div>
 
-                                {[...Array(6)].map((_, colIndex) => {
+                                {[...Array(5)].map((_, colIndex) => {
                                     const assignedPrize = getCellLot(rowIndex, colIndex);
 
                                     return (
@@ -244,9 +272,13 @@ function AdminPage() {
                                         >
                                             {assignedPrize ? (
                                                 <div className="assigned-prize">
-                                                    <div className="assigned-emoji">
-                                                        {assignedPrize.value}
-                                                    </div>
+                                                    {assignedPrize.image ? (
+                                                        <img src={assignedPrize.image} alt={assignedPrize.name} className="assigned-image" />
+                                                    ) : (
+                                                        <div className="assigned-emoji">
+                                                            {assignedPrize.value}
+                                                        </div>
+                                                    )}
                                                     <div className="assigned-name">
                                                         {assignedPrize.name}
                                                     </div>
@@ -264,7 +296,7 @@ function AdminPage() {
                     <div className="stats">
                         <p>
                             Назначено призов:{' '}
-                            {Object.keys(cellLots).length} / 30
+                            {Object.keys(cellLots).length} / 20
                         </p>
                     </div>
                 </div>
@@ -313,6 +345,24 @@ function AdminPage() {
                                     }
                                 />
                             </label>
+                            <label>Картинка:</label>
+                            <div className="image-picker-grid image-picker-grid-modal">
+                                <div
+                                    className={`image-picker-item ${!editingPrize.image ? 'selected' : ''}`}
+                                    onClick={() => setEditingPrize({ ...editingPrize, image: undefined })}
+                                >
+                                    Без
+                                </div>
+                                {giftImages.map((img) => (
+                                    <div
+                                        key={img}
+                                        className={`image-picker-item ${editingPrize.image === img ? 'selected' : ''}`}
+                                        onClick={() => setEditingPrize({ ...editingPrize, image: img })}
+                                    >
+                                        <img src={img} alt="" />
+                                    </div>
+                                ))}
+                            </div>
                             <div className="modal-buttons">
                                 <button onClick={handleUpdatePrize} className="save-button">
                                     💾 Сохранить

@@ -13,6 +13,7 @@ interface Props {
         name: string;
         id: number;
         color: string;
+        image?: string;
     } | null
     onClose: () => void;
 }
@@ -69,7 +70,11 @@ export const RewardDialog: FC<Props> = ({show, showConfetti, modalPrize, onClose
                                 delay: 0.1
                             }}
                         >
-                            {modalPrize.value}
+                            {modalPrize.image ? (
+                                <img src={modalPrize.image} alt={modalPrize.name} className="modal-prize-image" />
+                            ) : (
+                                modalPrize.value
+                            )}
                         </motion.div>
                         <motion.h2
                             // @ts-ignore
