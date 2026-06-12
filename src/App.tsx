@@ -169,7 +169,7 @@ function App() {
                 initial="hidden"
                 animate="visible"
             >
-                {donateValues.map((value, rowIndex) => (
+                {donateValues.map((_, rowIndex) => (
                     <motion.div
                         key={rowIndex}
                         // @ts-ignore
