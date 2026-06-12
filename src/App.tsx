@@ -11,7 +11,7 @@ import {NavLink} from "react-router-dom";
 import {type Prize, useLotteryStore} from "./store/Lotterystore.ts";
 
 // Значения донатов (суммы на ячейках)
-const donateValues = [100, 200, 500, 1000];
+const donateValues = [1, 2, 3, 4, 5, 6];
 
 function App() {
     // Состояние для хранения открытых ячеек
@@ -123,6 +123,7 @@ function App() {
                 <motion.h1
                     animate={{
                         scale: [1, 1.05, 1],
+                        textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'
                     }}
                     transition={{
                         duration: 2,
@@ -130,9 +131,9 @@ function App() {
                         ease: "easeInOut"
                     }}
                 >
-                    🎰 Лотерея Донатов 🎰
+                    🎰 Розыгрыш призов 🎰
                 </motion.h1>
-                <p>Кликай на ячейку и узнай свой приз!</p>
+                <p className='sub_header'>Выбирай ячейку и узнай забирай свой приз!</p>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
                     <motion.button
                         // @ts-ignore
@@ -171,17 +172,9 @@ function App() {
                         className="lottery-row"
                         variants={rowVariants}
                     >
-                        {/* Ячейка с названием доната */}
-                        <motion.div
-                            // @ts-ignore
-                            className="donate-label"
-                            variants={cellVariants}
-                        >
-                            Донат<br/>{value}
-                        </motion.div>
 
                         {/* 6 ячеек для каждого ряда */}
-                        {[...Array(5)].map((_, colIndex) => {
+                        {[...Array(6)].map((_, colIndex) => {
                             const cellKey = `${rowIndex}-${colIndex}`;
                             const openedPrize = openedCells[cellKey];
 
@@ -258,16 +251,26 @@ function App() {
             >
                 <motion.p
                     key={Object.keys(openedCells).length}
-                    initial={{scale: 1.5, color: '#ffd700'}}
-                    animate={{scale: 1, color: '#ffffff'}}
+                    initial={{scale: 1.5, color: '#ffd700', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
+                    animate={{scale: 1, color: '#ffffff', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
                     transition={{
                         type: "spring",
                         stiffness: 200,
                         damping: 10
                     }}
                 >
-                    Открыто ячеек: {Object.keys(openedCells).length} / 20
+                    Открыто ячеек: {Object.keys(openedCells).length} / 36 ❤️
                 </motion.p>
+                <div style={{textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}>
+                    <ul style={{listStyle: 'none'}}>
+                        <li>
+                            1 ячейка - 5000 баллов или 500 рублей ❤️
+                        </li>
+                        <li>
+                            1 человек может открыть максимум 3 ячейки.
+                        </li>
+                    </ul>
+                </div>
             </motion.div>
         </div>
     )
