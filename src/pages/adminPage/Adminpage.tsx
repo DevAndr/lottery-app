@@ -8,7 +8,7 @@ import * as React from "react";
 
 const donateValues = [1, 2, 3, 4, 5, 6];
 
-const giftImages = Array.from({ length: 21 }, (_, i) => `/images/gifts/${i + 1}.jpg`);
+const giftImages = Array.from({ length: 24 }, (_, i) => `/images/gifts/${i + 1}.jpg`);
 
 function AdminPage() {
     const {
