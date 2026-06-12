@@ -121,8 +121,12 @@ function App() {
                 }}
             >
                 <motion.h1
+                    initial={{
+                        color: '#9300ff'
+                    }}
                     animate={{
                         scale: [1, 1.05, 1],
+                        color: '#9300ff',
                         textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'
                     }}
                     transition={{
@@ -133,7 +137,7 @@ function App() {
                 >
                     🎰 Розыгрыш призов 🎰
                 </motion.h1>
-                <p className='sub_header'>Выбирай ячейку и узнай забирай свой приз!</p>
+                <p className='sub_header'>Выбирай ячейку и забирай свой приз!</p>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
                     <motion.button
                         // @ts-ignore
