@@ -237,7 +237,7 @@ function App() {
                                             </motion.div>
                                         </motion.div>
                                     ) : (
-                                        <div className="cell-value">{value}</div>
+                                        <div className="cell-value">{colIndex + 1}</div>
                                     )}
                                 </motion.div>
                             );
