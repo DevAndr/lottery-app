@@ -237,7 +237,7 @@ function App() {
                                             </motion.div>
                                         </motion.div>
                                     ) : (
-                                        <div className="cell-value">{value}</div>
+                                        <div className="cell-value">{colIndex + 1}</div>
                                     )}
                                 </motion.div>
                             );
@@ -255,8 +255,8 @@ function App() {
             >
                 <motion.p
                     key={Object.keys(openedCells).length}
-                    initial={{scale: 1.5, color: '#ffd700', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
-                    animate={{scale: 1, color: '#ffffff', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
+                    initial={{scale: 1.5, color: '#9300ff', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
+                    animate={{scale: 1, color: '#9300ff', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
                     transition={{
                         type: "spring",
                         stiffness: 200,
@@ -265,7 +265,7 @@ function App() {
                 >
                     Открыто ячеек: {Object.keys(openedCells).length} / 36 ❤️
                 </motion.p>
-                <div style={{textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}>
+                <div style={{textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black', color: '#9300ff'}}>
                     <ul style={{listStyle: 'none'}}>
                         <li>
                             1 ячейка - 5000 баллов или 500 рублей ❤️
