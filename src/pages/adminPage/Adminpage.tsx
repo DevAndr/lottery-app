@@ -250,6 +250,7 @@ function AdminPage() {
                                 {[...Array(4)].map((_, colIndex) => {
                                     const assignedPrize = getCellLot(rowIndex, colIndex);
                                     currentIndexCell++;
+                                    value;
 
                                     return (
                                         <motion.div
