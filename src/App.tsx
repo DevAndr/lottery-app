@@ -11,7 +11,7 @@ import {NavLink} from "react-router-dom";
 import {type Prize, useLotteryStore} from "./store/Lotterystore.ts";
 
 // Значения донатов (суммы на ячейках)
-const donateValues = [1, 2, 3, 4, 5, 6];
+const donateValues = [1, 2, 3, 4];
 
 function App() {
     // Состояние для хранения открытых ячеек
@@ -104,6 +104,8 @@ function App() {
         setIsModalOpen(false);
     };
 
+    let currentIndexCell = 0;
+
     return (
         <div className="app">
             {/* Модальное окно с призом */}
@@ -122,11 +124,11 @@ function App() {
             >
                 <motion.h1
                     initial={{
-                        color: '#9300ff'
+                        color: '#ffb4f5'
                     }}
                     animate={{
                         scale: [1, 1.05, 1],
-                        color: '#9300ff',
+                        color: '#ffb4f5',
                         textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'
                     }}
                     transition={{
@@ -135,9 +137,8 @@ function App() {
                         ease: "easeInOut"
                     }}
                 >
-                    🎰 Розыгрыш призов 🎰
+                    💸 Розыгрыш призов 💸
                 </motion.h1>
-                <p className='sub_header'>Выбирай ячейку и забирай свой приз!</p>
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", gap: 16}}>
                     <motion.button
                         // @ts-ignore
@@ -178,9 +179,10 @@ function App() {
                     >
 
                         {/* 6 ячеек для каждого ряда */}
-                        {[...Array(6)].map((_, colIndex) => {
+                        {[...Array(4)].map((_, colIndex) => {
                             const cellKey = `${rowIndex}-${colIndex}`;
                             const openedPrize = openedCells[cellKey];
+                            currentIndexCell++;
 
                             return (
                                 <motion.div
@@ -237,7 +239,7 @@ function App() {
                                             </motion.div>
                                         </motion.div>
                                     ) : (
-                                        <div className="cell-value">{colIndex + 1}</div>
+                                        <div className="cell-value">{currentIndexCell}</div>
                                     )}
                                 </motion.div>
                             );
@@ -255,26 +257,16 @@ function App() {
             >
                 <motion.p
                     key={Object.keys(openedCells).length}
-                    initial={{scale: 1.5, color: '#9300ff', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
-                    animate={{scale: 1, color: '#9300ff', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
+                    initial={{scale: 1.5, color: '#ffb4f5', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
+                    animate={{scale: 1, color: '#ffb4f5', textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black'}}
                     transition={{
                         type: "spring",
                         stiffness: 200,
                         damping: 10
                     }}
                 >
-                    Открыто ячеек: {Object.keys(openedCells).length} / 36 ❤️
+                    Открыто ячеек: {Object.keys(openedCells).length} / 16 ❤️
                 </motion.p>
-                <div style={{textShadow: '-1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black, 1px  1px 0 black', color: '#9300ff'}}>
-                    <ul style={{listStyle: 'none'}}>
-                        <li>
-                            1 ячейка - 5000 баллов или 500 рублей ❤️
-                        </li>
-                        <li>
-                            1 человек может открыть максимум 3 ячейки.
-                        </li>
-                    </ul>
-                </div>
             </motion.div>
         </div>
     )
