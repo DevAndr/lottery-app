@@ -6,9 +6,9 @@ import {type Prize, useLotteryStore} from "../../store/Lotterystore.ts";
 import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
 import * as React from "react";
 
-const donateValues = [1, 2, 3, 4, 5, 6];
+const donateValues = [1, 2, 3, 4];
 
-const giftImages = Array.from({ length: 24 }, (_, i) => `/images/gifts/${i + 1}.jpg`);
+const giftImages = Array.from({ length: 3 }, (_, i) => `/images/gifts/${i + 1}.jpg`);
 
 function AdminPage() {
     const {
@@ -86,6 +86,8 @@ function AdminPage() {
             randomizeAllLots();
         }
     };
+
+    let currentIndexCell = 0;
 
     return (
         <div className="admin-page">
@@ -245,8 +247,9 @@ function AdminPage() {
                     <div className="lottery-grid-admin">
                         {donateValues.map((value, rowIndex) => (
                             <div key={rowIndex} className="lottery-row-admin">                             
-                                {[...Array(6)].map((_, colIndex) => {
+                                {[...Array(4)].map((_, colIndex) => {
                                     const assignedPrize = getCellLot(rowIndex, colIndex);
+                                    currentIndexCell++;
 
                                     return (
                                         <motion.div
@@ -278,7 +281,7 @@ function AdminPage() {
                                                     </div>
                                                 </div>
                                             ) : (
-                                                <div className="empty-cell">{value}</div>
+                                                <div className="empty-cell">{currentIndexCell}</div>
                                             )}
                                         </motion.div>
                                     );
@@ -290,7 +293,7 @@ function AdminPage() {
                     <div className="stats">
                         <p>
                             Назначено призов:{' '}
-                            {Object.keys(cellLots).length} / 36
+                            {Object.keys(cellLots).length} / 16
                         </p>
                     </div>
                 </div>
