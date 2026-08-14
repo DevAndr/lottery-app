@@ -11,7 +11,8 @@ import {NavLink} from "react-router-dom";
 import {type Prize, useLotteryStore} from "./store/Lotterystore.ts";
 
 // Значения донатов (суммы на ячейках)
-const donateValues = [1, 2, 3, 4];
+const donateValues = [1, 2, 3, 4, 5];
+const COUNT_CELS = 6
 
 function App() {
     // Состояние для хранения открытых ячеек
@@ -179,7 +180,7 @@ function App() {
                     >
 
                         {/* 6 ячеек для каждого ряда */}
-                        {[...Array(4)].map((_, colIndex) => {
+                        {[...Array(COUNT_CELS)].map((_, colIndex) => {
                             const cellKey = `${rowIndex}-${colIndex}`;
                             const openedPrize = openedCells[cellKey];
                             currentIndexCell++;
@@ -265,7 +266,7 @@ function App() {
                         damping: 10
                     }}
                 >
-                    Открыто ячеек: {Object.keys(openedCells).length} / 16 ❤️
+                    Открыто ячеек: {Object.keys(openedCells).length} / {COUNT_CELS * donateValues.length} ❤️
                 </motion.p>
             </motion.div>
         </div>

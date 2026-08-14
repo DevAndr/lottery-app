@@ -6,7 +6,7 @@ import {type Prize, useLotteryStore} from "../../store/Lotterystore.ts";
 import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
 import * as React from "react";
 
-const donateValues = [1, 2, 3, 4];
+const donateValues = [1, 2, 3, 4, 5];
 
 const giftImages = Array.from({ length: 5 }, (_, i) => `/images/gifts/${i + 1}.jpg`);
 
@@ -247,7 +247,7 @@ function AdminPage() {
                     <div className="lottery-grid-admin">
                         {donateValues.map((value, rowIndex) => (
                             <div key={rowIndex} className="lottery-row-admin">                             
-                                {[...Array(4)].map((_, colIndex) => {
+                                {[...Array(6)].map((_, colIndex) => {
                                     const assignedPrize = getCellLot(rowIndex, colIndex);
                                     currentIndexCell++;
                                     value;
