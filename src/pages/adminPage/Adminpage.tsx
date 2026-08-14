@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Adminpage.css';
 import {type Prize, useLotteryStore} from "../../store/Lotterystore.ts";
-import EmojiPicker from "../../components/emoji/Emojipicker.tsx";
 import * as React from "react";
 
 const donateValues = [1, 2, 3, 4, 5];
@@ -34,7 +33,7 @@ function AdminPage() {
 
     // Добавить новый приз
     const handleAddPrize = () => {
-        if (!newPrize.name || !newPrize.value) {
+        if (!newPrize.name) {
             alert('Заполните название и эмодзи приза!');
             return;
         }
@@ -120,13 +119,6 @@ function AdminPage() {
                                 value={newPrize.name}
                                 onChange={(e) =>
                                     setNewPrize({ ...newPrize, name: e.target.value })
-                                }
-                            />
-
-                            <EmojiPicker
-                                value={newPrize.value}
-                                onChange={(emoji) =>
-                                    setNewPrize({ ...newPrize, value: emoji })
                                 }
                             />
 
