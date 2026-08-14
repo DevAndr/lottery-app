@@ -101,9 +101,9 @@ export const useLotteryStore = create<LotteryStore>()(
 
                 const newLots: Record<string, Prize> = {};
 
-                // 6 рядов, 6 колонок
-                for (let row = 0; row < 4; row++) {
-                    for (let col = 0; col < 4; col++) {
+                // 5 рядов, 6 колонок
+                for (let row = 0; row < 5; row++) {
+                    for (let col = 0; col < 6; col++) {
                         const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
                         newLots[`${row}-${col}`] = randomPrize;
                     }
